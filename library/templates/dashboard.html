@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4">🧑‍💼 Admin Dashboard</h2>
+
+<!-- Add Book -->
+<div class="card p-4 mb-5">
+  <h5>Add New Book</h5>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Add Book</button>
+  </form>
+</div>
+
+<!-- List of Books with Edit/Delete -->
+<h5 class="mb-3">📚 Existing Books</h5>
+<table class="table table-bordered bg-white shadow-sm">
+  <thead class="table-light">
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Published</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+    <tr>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.published_date }}</td>
+      <td>
+        <a href="{% url 'edit-book' book.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
+        <a href="{% url 'delete-book' book.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
